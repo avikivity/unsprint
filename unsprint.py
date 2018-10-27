@@ -50,7 +50,7 @@ def unsprint(text):
     def replace(m):
         call = m.group(1)
         if call.startswith('fprint'):
-            call = 'fmt::print(' + m.group(2) + ', '
+            call = 'fmt_print(' + m.group(2) + ', '
         elif call.startswith('sprint'):
             call = 'format('
         else:
