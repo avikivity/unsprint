@@ -43,7 +43,7 @@ def printf_to_fmt(x):
             out += c
     return out
 
-regex = re.compile(r'\b(s?print\s*\(|fprint\s*\(\s*(\w+)\s*,\s*)(\s*")((?:[^"]|\\")+)',
+regex = re.compile(r'(?<!fmt::)\b(s?print\s*\(|fprint\s*\(\s*(\w+)\s*,\s*)\s*"((?:[^"]|\\")+)',
                    re.DOTALL)
     
 def unsprint(text):
@@ -54,10 +54,10 @@ def unsprint(text):
         elif call.startswith('sprint'):
             call = 'format('
         else:
-            call = 'fmt::format_to(std::cout, '
-        format = m.group(4)
+            call = 'fmt::print('
+        format = m.group(3)
         format = printf_to_fmt(format)
-        return call + m.group(3) + format + '"'
+        return call + '"' + format
     return re.sub(regex, replace, text)
 
 for fname in sys.argv[1:]:
