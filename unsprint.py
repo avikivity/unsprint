@@ -17,10 +17,26 @@ def printf_to_fmt(x):
         c = get()
         if c == '%':
             c = get()
-            if c in ('s', 'f', 'd'):
-                out += '{}'
+            if c == '%':
+                out += c
                 continue
-            raise Exception('Format not understood: ' + x)
+            stuff = ''
+            while c not in 'xXcugodsfep':
+                stuff += c
+                c = get()
+            if c != 's':
+                stuff += c
+            if stuff:
+                if len(stuff) >= 2 and stuff[-2] in 'lL':
+                    stuff = stuff[:-2] + stuff[-1]
+                elif len(stuff) >= 3 and stuff[-3:-2] == 'll':
+                    stuff = stuff[:-3] + stuff[-1]
+                if stuff[-1] == 'u':
+                    stuff = stuff[:-1] + 'd'
+            if stuff:
+                stuff = ':' + stuff
+            out += '{' + stuff + '}'
+            continue
         elif c == '{':
             out += '{{'
         else:
