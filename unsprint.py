@@ -41,6 +41,8 @@ def printf_to_fmt(x):
             continue
         elif c == '{':
             out += '{{'
+        elif c == '}':
+            out += '}}'
         else:
             out += c
     return out
