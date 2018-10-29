@@ -45,7 +45,7 @@ def printf_to_fmt(x):
             out += c
     return out
 
-regex = re.compile(r'(?<!fmt::)\b(s?print\s*\(|fprint\s*\(\s*(\w+)\s*,\s*)\s*"((?:[^"]|\\")+)',
+regex = re.compile(r'(?<!fmt::)\b(s?print\s*\(|fprint\s*\(\s*(\w+)\s*,\s*)\s*"((?:[^\n"]|\")+)(\s*[,\)])',
                    re.DOTALL)
     
 def unsprint(text):
@@ -58,8 +58,9 @@ def unsprint(text):
         else:
             call = 'fmt::print('
         format = m.group(3)
+        trail = m.group(4)
         format = printf_to_fmt(format)
-        return call + '"' + format
+        return call + '"' + format + trail
     return re.sub(regex, replace, text)
 
 for fname in sys.argv[1:]:
