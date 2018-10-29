@@ -45,7 +45,7 @@ def printf_to_fmt(x):
             out += c
     return out
 
-regex = re.compile(r'(?<!fmt::)\b(s?print\s*\(|fprint\s*\(\s*(\w+)\s*,\s*)\s*"((?:[^\n"]|\")+)(\s*[,\)])',
+regex = re.compile(r'(?<!fmt::)\b(s?print\s*\(|fprint\s*\(\s*(\w+)\s*,\s*)\s*"((?:[^\n"]|\\")+)(\s*[,\)])',
                    re.DOTALL)
     
 def unsprint(text):
