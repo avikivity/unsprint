@@ -21,9 +21,11 @@ def printf_to_fmt(x):
                 out += c
                 continue
             stuff = ''
-            while c not in 'xXcugodsfep':
+            while c not in 'xXcugodsfepi':
                 stuff += c
                 c = get()
+            if c == 'i':
+                c = 'd'
             if c != 's':
                 stuff += c
             if stuff:
